@@ -1,0 +1,42 @@
+@page "/register"
+@inject NavigationManager Navigation
+@inject UserSession UserSession
+@using System.ComponentModel.DataAnnotations
+
+<div class="container mt-4">
+    <h3>Register</h3>
+    <EditForm Model="@newUser" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label for="userName" class="form-label">Name</label>
+            <InputText id="userName" class="form-control" @bind-Value="newUser.Name" />
+            <ValidationMessage For="@(() => newUser.Name)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="userEmail" class="form-label">Email</label>
+            <InputText id="userEmail" type="email" class="form-control" @bind-Value="newUser.Email" />
+            <ValidationMessage For="@(() => newUser.Email)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="userPassword" class="form-label">Password</label>
+            <InputText id="userPassword" type="password" class="form-control" @bind-Value="newUser.Password" />
+            <ValidationMessage For="@(() => newUser.Password)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </EditForm>
+</div>
+
+@code {
+    private User newUser = new User();
+
+    private void HandleValidSubmit()
+    {
+        UserSession.SetUser(newUser);
+        Navigation.NavigateTo("/");
+    }
+}

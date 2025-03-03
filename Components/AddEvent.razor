@@ -1,0 +1,27 @@
+@page "/add-event"
+@inject EventService EventService
+
+<div class="container mt-4">
+    <h3>Add New Event</h3>
+    <form>
+        <div class="mb-3">
+            <label for="eventTitle" class="form-label">Event Title</label>
+            <input id="eventTitle" class="form-control" @bind="newEvent.Title" placeholder="Event Title" />
+        </div>
+        <div class="mb-3">
+            <label for="eventDate" class="form-label">Event Date</label>
+            <input id="eventDate" type="date" class="form-control" @bind="newEvent.Date" />
+        </div>
+        <button type="button" class="btn btn-primary" @onclick="AddNewEvent">Add Event</button>
+    </form>
+</div>
+
+@code {
+    private Event newEvent = new Event { Title = string.Empty };
+
+    private void AddNewEvent()
+    {
+        EventService.AddEvent(newEvent);
+        newEvent = new Event { Title = string.Empty }; // Reset form
+    }
+}

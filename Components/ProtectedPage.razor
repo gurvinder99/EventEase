@@ -1,0 +1,21 @@
+@page "/protected"
+@inject UserSession UserSession
+@inject NavigationManager Navigation
+
+@if (UserSession.IsUserLoggedIn())
+{
+    <h3>Welcome, @UserSession.GetUser().Name!</h3>
+    <p>You are logged in with the email: @UserSession.GetUser().Email</p>
+}
+else
+{
+    <p>You are not logged in.</p>
+    <button class="btn btn-primary" @onclick="NavigateToRegister">Register</button>
+}
+
+@code {
+    private void NavigateToRegister()
+    {
+        Navigation.NavigateTo("/register");
+    }
+}

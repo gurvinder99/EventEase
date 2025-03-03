@@ -1,0 +1,28 @@
+@page "/events"
+@inject EventService EventService
+
+<div class="container mt-4">
+    <h3>Your Events</h3>
+    @foreach (var eventItem in EventService.GetEvents())
+    {
+        <div class="card mb-2">
+            <div class="card-body">
+                <input type="checkbox" class="form-check-input" @bind="@eventItem.IsCompleted" />
+                <label class="form-check-label @(eventItem.IsCompleted ? "text-decoration-line-through" : "")">@eventItem.Title</label>
+                <button type="button" class="btn btn-danger btn-sm float-end" @onclick="() => DeleteEvent(eventItem.Id)">Delete</button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private void MarkAsCompleted(int id)
+    {
+        EventService.MarkEventAsCompleted(id);
+    }
+
+    private void DeleteEvent(int id)
+    {
+        EventService.DeleteEvent(id);
+    }
+}
